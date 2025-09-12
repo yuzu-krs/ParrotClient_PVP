@@ -19,12 +19,12 @@ public class DiscordRP {
 			@Override
 			public void apply(DiscordUser user) {
 				System.out.println("Welcome "+user.username+"#"+user.discriminator);
-				update("Loading YuzuClient","");
+				update("Loading ParrotClient","");
 				
 			}
 		}).build();
 		
-		DiscordRPC.discordInitialize("", handlers, true);
+		DiscordRPC.discordInitialize("1416196723566444554", handlers, true);
 		
 		new Thread("Discord RPC Callback") {
 			@Override

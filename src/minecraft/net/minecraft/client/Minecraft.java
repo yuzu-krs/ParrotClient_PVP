@@ -555,24 +555,24 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         this.renderEngine.loadTickableTexture(TextureMap.locationBlocksTexture, this.textureMapBlocks);
         this.renderEngine.bindTexture(TextureMap.locationBlocksTexture);
         this.textureMapBlocks.setBlurMipmapDirect(false, this.gameSettings.mipmapLevels > 0);
-        SplashProgress.setProgress(1, "YuzuClient - ModuleManager");
+        SplashProgress.setProgress(1, "ParrotClient - ModuleManager");
         this.modelManager = new ModelManager(this.textureMapBlocks);
         this.mcResourceManager.registerReloadListener(this.modelManager);
         this.renderItem = new RenderItem(this.renderEngine, this.modelManager);
-        SplashProgress.setProgress(2, "YuzuClient - RenderItem");
+        SplashProgress.setProgress(2, "ParrotClient - RenderItem");
         this.renderManager = new RenderManager(this.renderEngine, this.renderItem);
-        SplashProgress.setProgress(3, "YuzuClient - RenderManager");
+        SplashProgress.setProgress(3, "ParrotClient - RenderManager");
         this.itemRenderer = new ItemRenderer(this);
-        SplashProgress.setProgress(4, "YuzuClient - ItemRender");
+        SplashProgress.setProgress(4, "ParrotClient - ItemRender");
         this.mcResourceManager.registerReloadListener(this.renderItem);
         this.entityRenderer = new EntityRenderer(this, this.mcResourceManager);
-        SplashProgress.setProgress(5, "YuzuClient - EntityRender");
+        SplashProgress.setProgress(5, "ParrotClient - EntityRender");
         this.mcResourceManager.registerReloadListener(this.entityRenderer);
         this.blockRenderDispatcher = new BlockRendererDispatcher(this.modelManager.getBlockModelShapes(), this.gameSettings);
-        SplashProgress.setProgress(6, "YuzuClient - BlockRenderDispatcher");
+        SplashProgress.setProgress(6, "ParrotClient - BlockRenderDispatcher");
         this.mcResourceManager.registerReloadListener(this.blockRenderDispatcher);
         this.renderGlobal = new RenderGlobal(this);
-        SplashProgress.setProgress(7, "YuzuClient - RenderGlobal");
+        SplashProgress.setProgress(7, "ParrotClient - RenderGlobal");
         this.mcResourceManager.registerReloadListener(this.renderGlobal);
         this.guiAchievement = new GuiAchievement(this);
         GlStateManager.viewport(0, 0, this.displayWidth, this.displayHeight);
@@ -640,7 +640,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     private void createDisplay() throws LWJGLException
     {
         Display.setResizable(true);
-        Display.setTitle("Loading EduCraft");
+        Display.setTitle("Loading ParrotClient");
 
         try
         {
@@ -694,12 +694,24 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
             try
             {
-                inputstream = this.mcDefaultResourcePack.getInputStreamAssets(new ResourceLocation("icons/icon_16x16.png"));
-                inputstream1 = this.mcDefaultResourcePack.getInputStreamAssets(new ResourceLocation("icons/icon_32x32.png"));
+                // ParrotClientのカスタムアイコンを使用
+                inputstream = this.mcDefaultResourcePack.getInputStreamAssets(new ResourceLocation("parrotclient", "Parrot.png"));
+                inputstream1 = this.mcDefaultResourcePack.getInputStreamAssets(new ResourceLocation("parrotclient", "Parrot.png"));
 
                 if (inputstream != null && inputstream1 != null)
                 {
                     Display.setIcon(new ByteBuffer[] {this.readImageToBuffer(inputstream), this.readImageToBuffer(inputstream1)});
+                }
+                else
+                {
+                    // フォールバック: デフォルトのアイコンを使用
+                    inputstream = this.mcDefaultResourcePack.getInputStreamAssets(new ResourceLocation("icons/icon_16x16.png"));
+                    inputstream1 = this.mcDefaultResourcePack.getInputStreamAssets(new ResourceLocation("icons/icon_32x32.png"));
+
+                    if (inputstream != null && inputstream1 != null)
+                    {
+                        Display.setIcon(new ByteBuffer[] {this.readImageToBuffer(inputstream), this.readImageToBuffer(inputstream1)});
+                    }
                 }
             }
             catch (IOException ioexception)

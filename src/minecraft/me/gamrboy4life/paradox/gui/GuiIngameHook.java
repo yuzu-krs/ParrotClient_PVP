@@ -12,9 +12,9 @@ import me.gamrboy4life.paradox.utils.Wrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiIngame;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.GlStateManager;
+import org.lwjgl.opengl.GL11;
 
 public class GuiIngameHook extends GuiIngame {
 
@@ -24,14 +24,9 @@ public class GuiIngameHook extends GuiIngame {
 
     public void renderGameOverlay(float p_175180_1_) {
         super.renderGameOverlay(p_175180_1_);
-
-        if (!mc.gameSettings.showDebugInfo) {
-			mc.getTextureManager().bindTexture(new ResourceLocation("yuzuclient/yuzuclientlogo.png"));
-			GuiScreen.drawModalRectWithCustomSizedTexture(3, 0, 1, 5,60,30, 60, 30);
-            
-            
-            renderArrayList();
-        }
+        
+        // 右上にオンになっているmodを表示（コンパクト版）
+        renderCompactModList();
     }
 
     private HashSet<String> modBlackList = Sets.newHashSet(ClickGUI.class.getName());
@@ -40,27 +35,35 @@ public class GuiIngameHook extends GuiIngame {
         return modBlackList.contains(m.getClass().getName());
     }
 
-    private void renderArrayList() {
+    private void renderCompactModList() {
         int yCount = 0;
         int index = 0;
         long x = 0;
+        
         for (Module m : Paradox.instance.moduleManager.getModules()) {
             m.onRender();
 
             ScaledResolution sr = new ScaledResolution(mc);
-            double offset = yCount * (Wrapper.fr.FONT_HEIGHT + 6);
+            double offset = yCount * (Wrapper.fr.FONT_HEIGHT * 0.6f + 2); // フォントサイズに合わせて間隔を調整
 
             if (m.isToggled()) {
                 if (!modBlackList.contains(m.getClass().getName())) {
-                    int rainbowColor = ColorUtils.rainbowEffect(index + x * 200000000L, 1.0f).getRGB();
+                    int textWidth = (int)(Wrapper.fr.getStringWidth("> " + m.getName()) * 0.6f);
+                    int panelX = sr.getScaledWidth() - textWidth - 2;
+                    int panelY = (int) offset;
 
-                    // Draw gray background
-                    Gui.drawRect(sr.getScaledWidth() - Wrapper.fr.getStringWidth(m.getName()) - 15, (int) offset, sr.getScaledWidth(), (int) (6 + Wrapper.fr.FONT_HEIGHT + offset), 0x80000000);
-
-                    // Draw blurred rainbow border
-                    drawBlurredRainbowBorder(sr.getScaledWidth() - Wrapper.fr.getStringWidth(m.getName()) - 15, (int) offset, sr.getScaledWidth(), (int) (6 + Wrapper.fr.FONT_HEIGHT + offset), index);
-
-                    Wrapper.fr.drawString("- " + m.getName(), sr.getScaledWidth() - Wrapper.fr.getStringWidth(m.getName()) - 13, 4 + offset, 0xFFFFFFFF);
+                    // シンプルなテキスト
+                    GlStateManager.pushMatrix();
+                    GlStateManager.scale(0.6f, 0.6f, 1.0f);
+                    
+                    // クールなカラーパレット
+                    int textColor = getCoolColor(index);
+                    
+                    // メインテキスト
+                    Wrapper.fr.drawStringWithShadow("> " + m.getName(), (panelX) / 0.6f, panelY / 0.6f, textColor);
+                    
+                    GlStateManager.popMatrix();
+                    
                     yCount++;
                     index++;
                     x++;
@@ -68,18 +71,22 @@ public class GuiIngameHook extends GuiIngame {
             }
         }
     }
-
-    private void drawBlurredRainbowBorder(int left, int top, int right, int bottom, int index) {
-        //int color = ColorUtils.rainbowEffect(index * 200000000L, 1.0f).darker().getRGB() & 0x7FFFFFFF; // Make color darker and semi-transparent
-    	int color = 0xBFFFFFFF;
-    	
-        // Draw top border
-        Gui.drawRect(left - 1, top - 1, right + 1, top, color);
-        // Draw bottom border
-        Gui.drawRect(left - 1, bottom - 1, right + 1, bottom, color);
-        // Draw left border
-        Gui.drawRect(left - 1, top, left, bottom, color);
-        // Draw right border
-        Gui.drawRect(right, top, right + 1, bottom, color);
+    
+    private int getCoolColor(int index) {
+        // クールなカラーパレット（青系、紫系、シアン系）
+        int[] coolColors = {
+            0xFF00BFFF, // Deep Sky Blue
+            0xFF4169E1, // Royal Blue
+            0xFF9370DB, // Medium Purple
+            0xFF00CED1, // Dark Turquoise
+            0xFF1E90FF, // Dodger Blue
+            0xFF8A2BE2, // Blue Violet
+            0xFF00FA9A, // Medium Spring Green
+            0xFF20B2AA, // Light Sea Green
+            0xFF6495ED, // Cornflower Blue
+            0xFF7B68EE  // Medium Slate Blue
+        };
+        return coolColors[index % coolColors.length];
     }
+
 }

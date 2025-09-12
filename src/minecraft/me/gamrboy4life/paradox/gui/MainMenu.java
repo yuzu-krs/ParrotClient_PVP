@@ -22,7 +22,7 @@ public class MainMenu extends GuiScreen{
     }
 
     public void drawScreen(int mouseX,int mouseY,float partialticks) {
-        String backgroundImage = useFirstBackground ? "yuzuclient/yuzuclient.png" : "yuzuclient/yuzuclient2.png";
+        String backgroundImage = useFirstBackground ? "yuzuclient/parrotclient.png" : "yuzuclient/parrotclient2.png";
         mc.getTextureManager().bindTexture(new ResourceLocation(backgroundImage));
         this.drawModalRectWithCustomSizedTexture(0, 0, 0, 0,this.width, this.height, this.width, this.height);
         this.drawGradientRect(0, height-120, width, height, 0x00000000, 0xff000000);

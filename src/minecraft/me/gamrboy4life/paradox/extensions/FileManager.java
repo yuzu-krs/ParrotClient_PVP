@@ -20,7 +20,7 @@ import me.gamrboy4life.paradox.module.status.TabGui;
 import me.gamrboy4life.paradox.utils.JsonUtils;
 
 public class FileManager {
-	public static File ROOT_DIR=new File("yuzuclient");
+	public static File ROOT_DIR=new File("parrotclient");
 	public static File modules=new File(ROOT_DIR,"modules.json");
 	
 	public void init() {
