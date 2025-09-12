@@ -1,0 +1,40 @@
+# Eclipse
+eclipse/
+.metadata/
+.project
+.classpath
+.settings/
+
+# Build outputs
+bin/
+build/
+target/
+out/
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+temp/
+tmp/
+*.tmp
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+*.swp
+*.swo
+*~
+
+# JAR files (if they are build outputs)
+jars/
+lib/
+runtime/
