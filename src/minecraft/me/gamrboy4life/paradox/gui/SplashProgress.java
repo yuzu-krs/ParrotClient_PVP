@@ -52,7 +52,7 @@ public class SplashProgress {
 		GlStateManager.enableTexture2D();
 		
 		if(splash==null) {
-			splash=new ResourceLocation("parrotclient/splash.png");
+			splash=new ResourceLocation("yuzuclient/splash.png");
 		}
 		
 		tm.bindTexture(splash);

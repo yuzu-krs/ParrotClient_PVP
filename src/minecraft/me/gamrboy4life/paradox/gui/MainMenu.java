@@ -40,6 +40,30 @@ public class MainMenu extends GuiScreen{
         }
 
 
+       
+     // ロゴテキストをスケーリングして描画
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(width / 2f, height / 3f, 0); // 中央へ移動
+        float scale = 3.0f; // テキストを大きく
+        GlStateManager.scale(scale, scale, scale);
+
+        // 外枠っぽいシャドウ（黒）
+        mc.fontRendererObj.drawString("ParrotClient",
+                -mc.fontRendererObj.getStringWidth("ParrotClient") / 2, 
+                -mc.fontRendererObj.FONT_HEIGHT / 2, 
+                0xAA000000);
+
+        // メインカラー（例：青～シアンのグラデーション）
+        int mainColor = 0x00CFFF;  
+        mc.fontRendererObj.drawString("ParrotClient",
+                -mc.fontRendererObj.getStringWidth("ParrotClient") / 2, 
+                -mc.fontRendererObj.FONT_HEIGHT / 2, 
+                mainColor);
+
+        GlStateManager.popMatrix();
+
+
+        // バージョン情報を中央に表示
         GlStateManager.pushMatrix();
         GlStateManager.translate(width/2f,height/2f,0);
         GlStateManager.scale(2,2,1);

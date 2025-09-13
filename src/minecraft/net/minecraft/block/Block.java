@@ -3,6 +3,7 @@ package net.minecraft.block;
 import java.util.List;
 import java.util.Random;
 
+import me.gamrboy4life.paradox.module.render.Xray;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -468,7 +469,56 @@ public class Block
     {
     	
     	
+    	if(Xray.enabled) {
+	    	//Xray
+    		if(this==Block.getBlockById(49))
+    			return true;
+
+	    	if(this==Block.getBlockById(14)) //Gold ore
+	    		return true;
+	    	
+	    	if(this==Block.getBlockById(15)) //Iron ore
+	    		return true;
+	    	
+	    	if(this==Block.getBlockById(16)) //Coal ore
+	    		return true;
+	    	
+	    	if(this==Block.getBlockById(21)) //Lapis ore
+	    		return true;
+	    	
+	    	if(this==Block.getBlockById(56)) //Diamond ore
+	    		return true;
+	    	
+	    	if(this==Block.getBlockById(73)) //Redstone Ore
+	    		return true;
+	    	
+	    	if(this==Block.getBlockById(74)) //Redstone Ore(Glow)
+	    		return true;
+	    	
+	    	if(this==Block.getBlockById(129)) //Emerald ore
+	    		return true;
+	    	
+	    	if(this==Block.getBlockById(153)) //Quartz ore
+	    		return true;
+	    	
+	    	if(this==Block.getBlockById(8)) //Flowing Water
+	    		return true;
+	    	
+	    	if(this==Block.getBlockById(9)) //Still Water
+	    		return true;
+	    	
+	    	if(this==Block.getBlockById(10)) //Flowing Lave
+	    		return true;
+	    	
+	    	if(this==Block.getBlockById(11)) //Still Lave
+	    		return true;
+	    		if(Xray.enabled)
+	    			return false;
+    	}
     	
+
+
+    		
 
     		
         return side == EnumFacing.DOWN && this.minY > 0.0D ? true : (side == EnumFacing.UP && this.maxY < 1.0D ? true : (side == EnumFacing.NORTH && this.minZ > 0.0D ? true : (side == EnumFacing.SOUTH && this.maxZ < 1.0D ? true : (side == EnumFacing.WEST && this.minX > 0.0D ? true : (side == EnumFacing.EAST && this.maxX < 1.0D ? true : !worldIn.getBlockState(pos).getBlock().isOpaqueCube())))));

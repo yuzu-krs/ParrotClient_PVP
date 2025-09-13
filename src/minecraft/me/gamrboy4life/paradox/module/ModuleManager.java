@@ -7,7 +7,6 @@ import me.gamrboy4life.paradox.Paradox;
 import me.gamrboy4life.paradox.module.pvp.AutoSprint;
 import me.gamrboy4life.paradox.module.pvp.FastPlace;
 import me.gamrboy4life.paradox.module.pvp.MineClicker;
-import me.gamrboy4life.paradox.module.render.BedWarsXray;
 import me.gamrboy4life.paradox.module.render.EspChest;
 import me.gamrboy4life.paradox.module.render.EspItems;
 import me.gamrboy4life.paradox.module.render.EspPlayer;
@@ -30,7 +29,7 @@ public class ModuleManager {
 		
 		
 		newMod(new AutoSprint());
-		newMod(new BedWarsXray());
+		
 			
 		newMod(new EspChest());
 		newMod(new EspItems());
