@@ -48,6 +48,7 @@ public class ModuleManager {
 		
 		newMod(new Potion());
 		
+		
 	}
 	
 	
