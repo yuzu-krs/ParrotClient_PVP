@@ -1,0 +1,44 @@
+{
+  "TabGui": {
+    "enabled": true
+  },
+  "AntiAFK": {
+    "enabled": false
+  },
+  "AutoSprint": {
+    "enabled": true
+  },
+  "ESP Chest": {
+    "enabled": false
+  },
+  "ESP Items": {
+    "enabled": false
+  },
+  "ESP Player": {
+    "enabled": false
+  },
+  "FastPlace": {
+    "enabled": true
+  },
+  "FullBright": {
+    "enabled": false
+  },
+  "MineClicker": {
+    "enabled": false
+  },
+  "Scaffold": {
+    "enabled": false
+  },
+  "Sneak": {
+    "enabled": false
+  },
+  "Xray": {
+    "enabled": false
+  },
+  "Armor": {
+    "enabled": true
+  },
+  "Potion": {
+    "enabled": true
+  }
+}

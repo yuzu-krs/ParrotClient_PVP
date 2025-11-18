@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.gamrboy4life.paradox.Paradox;
+import me.gamrboy4life.paradox.module.pvp.AntiAFK;
 import me.gamrboy4life.paradox.module.pvp.AutoSprint;
 import me.gamrboy4life.paradox.module.pvp.FastPlace;
 import me.gamrboy4life.paradox.module.pvp.MineClicker;
+import me.gamrboy4life.paradox.module.pvp.Scaffold;
+import me.gamrboy4life.paradox.module.pvp.Sneak;
 import me.gamrboy4life.paradox.module.render.EspChest;
 import me.gamrboy4life.paradox.module.render.EspItems;
 import me.gamrboy4life.paradox.module.render.EspPlayer;
@@ -27,7 +30,7 @@ public class ModuleManager {
 		
 		newMod(new TabGui());
 		
-		
+		newMod(new AntiAFK());	
 		newMod(new AutoSprint());
 		
 			
@@ -40,7 +43,9 @@ public class ModuleManager {
 		
 		
 		newMod(new MineClicker());
-
+		newMod(new Scaffold());
+		newMod(new Sneak());
+		
 		newMod(new Xray());
 		
 		newMod(new Armor());

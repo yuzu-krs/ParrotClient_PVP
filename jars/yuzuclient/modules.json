@@ -1,0 +1,233 @@
+{
+  "TabGui": {
+    "enabled": false
+  },
+  "AntiFire": {
+    "enabled": true
+  },
+  "AntiPotion": {
+    "enabled": false
+  },
+  "AutoClicker": {
+    "enabled": false
+  },
+  "AutoSword": {
+    "enabled": false
+  },
+  "Criticals": {
+    "enabled": false
+  },
+  "FastBow": {
+    "enabled": false
+  },
+  "KillAura": {
+    "enabled": false
+  },
+  "MineClicker": {
+    "enabled": false
+  },
+  "Reach": {
+    "enabled": false
+  },
+  "Regen": {
+    "enabled": false
+  },
+  "Ninja": {
+    "enabled": false
+  },
+  "AutoSprint": {
+    "enabled": true
+  },
+  "AutoWalk": {
+    "enabled": false
+  },
+  "Dolphin": {
+    "enabled": false
+  },
+  "Flight": {
+    "enabled": false
+  },
+  "Glide": {
+    "enabled": false
+  },
+  "Jetpack": {
+    "enabled": false
+  },
+  "JumpReset": {
+    "enabled": false
+  },
+  "MoonWalk": {
+    "enabled": false
+  },
+  "NoFall": {
+    "enabled": false
+  },
+  "Parkour": {
+    "enabled": false
+  },
+  "Scaffold": {
+    "enabled": false
+  },
+  "Sneak": {
+    "enabled": false
+  },
+  "Speed": {
+    "enabled": false
+  },
+  "Spider": {
+    "enabled": false
+  },
+  "Step": {
+    "enabled": false
+  },
+  "Wichly": {
+    "enabled": false
+  },
+  "Freecam": {
+    "enabled": false
+  },
+  "AntiAFK": {
+    "enabled": false
+  },
+  "AntiCobweb": {
+    "enabled": false
+  },
+  "AutoMine": {
+    "enabled": false
+  },
+  "AutoRespawn": {
+    "enabled": false
+  },
+  "BunnyHop": {
+    "enabled": false
+  },
+  "ChestStealer": {
+    "enabled": false
+  },
+  "FastLadder": {
+    "enabled": false
+  },
+  "FastPlace": {
+    "enabled": false
+  },
+  "InvHelper": {
+    "enabled": false
+  },
+  "BedBreaker": {
+    "enabled": false
+  },
+  "BedBreakerHuman": {
+    "enabled": false
+  },
+  "ArmorHit": {
+    "enabled": false
+  },
+  "Armor": {
+    "enabled": false
+  },
+  "Bossbar": {
+    "enabled": false
+  },
+  "CPS": {
+    "enabled": false
+  },
+  "Direction": {
+    "enabled": false
+  },
+  "FPS": {
+    "enabled": false
+  },
+  "Keystrokes": {
+    "enabled": false
+  },
+  "MEM": {
+    "enabled": false
+  },
+  "OldSneaking": {
+    "enabled": true
+  },
+  "Ping": {
+    "enabled": false
+  },
+  "Player": {
+    "enabled": false
+  },
+  "Potion": {
+    "enabled": false
+  },
+  "Target": {
+    "enabled": false
+  },
+  "XYZ": {
+    "enabled": false
+  },
+  "Year": {
+    "enabled": false
+  },
+  "Date": {
+    "enabled": false
+  },
+  "Time": {
+    "enabled": false
+  },
+  "BedWarsXray": {
+    "enabled": false
+  },
+  "BlockOverlay": {
+    "enabled": false
+  },
+  "ClickGui": {
+    "enabled": false
+  },
+  "ESP Chest": {
+    "enabled": false
+  },
+  "ESP Friendly": {
+    "enabled": false
+  },
+  "ESP Hostile": {
+    "enabled": false
+  },
+  "ESP Items": {
+    "enabled": false
+  },
+  "ESP Player": {
+    "enabled": false
+  },
+  "FullBright": {
+    "enabled": false
+  },
+  "NightVision": {
+    "enabled": false
+  },
+  "Xray": {
+    "enabled": false
+  },
+  "Cape": {
+    "enabled": false
+  },
+  "ChannelIcon": {
+    "enabled": false
+  },
+  "DeadPanic": {
+    "enabled": false
+  },
+  "EnchantEffect": {
+    "enabled": false
+  },
+  "Eyes": {
+    "enabled": false
+  },
+  "GifCape": {
+    "enabled": false
+  },
+  "Hat": {
+    "enabled": false
+  },
+  "Panic": {
+    "enabled": false
+  },
+  "SteveVoice": {
+    "enabled": false
+  }
+}
