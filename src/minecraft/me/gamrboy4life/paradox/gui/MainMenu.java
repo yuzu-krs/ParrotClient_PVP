@@ -47,18 +47,6 @@ public class MainMenu extends GuiScreen{
         float scale = 3.0f; // テキストを大きく
         GlStateManager.scale(scale, scale, scale);
 
-        // 外枠っぽいシャドウ（黒）
-        mc.fontRendererObj.drawString("ParrotClient",
-                -mc.fontRendererObj.getStringWidth("ParrotClient") / 2, 
-                -mc.fontRendererObj.FONT_HEIGHT / 2, 
-                0xAA000000);
-
-        // メインカラー（例：青～シアンのグラデーション）
-        int mainColor = 0x00CFFF;  
-        mc.fontRendererObj.drawString("ParrotClient",
-                -mc.fontRendererObj.getStringWidth("ParrotClient") / 2, 
-                -mc.fontRendererObj.FONT_HEIGHT / 2, 
-                mainColor);
 
         GlStateManager.popMatrix();
 
@@ -68,7 +56,7 @@ public class MainMenu extends GuiScreen{
         GlStateManager.translate(width/2f,height/2f,0);
         GlStateManager.scale(2,2,1);
         GlStateManager.translate(-(width/2f),-(height/2f),0);
-        this.drawCenteredString(mc.fontRendererObj, "ver1.0", width/2f, height/1.8f- mc.fontRendererObj.FONT_HEIGHT/2f, -1);
+        //this.drawCenteredString(mc.fontRendererObj, "ver2.0 by yuzu-krs", width/2f, height/2.2f- mc.fontRendererObj.FONT_HEIGHT/2f, -1);
         GlStateManager.popMatrix();
 
     }
