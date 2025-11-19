@@ -8,254 +8,225 @@ import org.lwjgl.opengl.GL11;
 import me.gamrboy4life.paradox.Paradox;
 import me.gamrboy4life.paradox.module.Category;
 import me.gamrboy4life.paradox.module.Module;
-import me.gamrboy4life.paradox.utils.ColorUtils;
 import me.gamrboy4life.paradox.utils.Wrapper;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 
-public class TabGui extends Module{
-	
-	public int currentTab;
-	public boolean expanded;
-	private long animationStartTime;
-	private float animationProgress;
-	private int hoveredTab = -1;
-	private int hoveredModule = -1;
+public class TabGui extends Module {
 
-	public TabGui() {
-		super("TabGui",0,Category.STATUS);
-		toggled=true;
-		animationStartTime = System.currentTimeMillis();
-	}
-	
-	public void draw() {
-		if(this.isToggled()) {
-			updateAnimation();
-			drawModernTabGui();
-		}
-	}
-	
-	private void updateAnimation() {
-		long currentTime = System.currentTimeMillis();
-		animationProgress = Math.min(1.0f, (currentTime - animationStartTime) / 300.0f);
-	}
-	
-	private void drawModernTabGui() {
-		GlStateManager.pushMatrix();
-		GlStateManager.enableBlend();
-		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-		
-		// メインカテゴリパネル
-		drawCategoryPanel();
-		
-		if(expanded) {
-			drawModulePanel();
-		}
-		
-		GlStateManager.disableBlend();
-		GlStateManager.popMatrix();
-	}
-	
-	private void drawCategoryPanel() {
-		int panelX = 2; // 左上角に詰める
-		int panelY = 2; // 左上角に詰める
-		int panelWidth = 60; // 幅を縮小
-		int panelHeight = Category.values().length * 12 + 6; // 高さを縮小
-		
-		// 背景グラデーション（より明るく）
-		drawGradientRect(panelX, panelY, panelX + panelWidth, panelY + panelHeight, 
-			0xF0000000, 0xE8000000);
-		
-		// クールな青ベースのボーダー
-		drawCoolBlueBorder(panelX, panelY, panelX + panelWidth, panelY + panelHeight);
-		
-		// 選択されたタブのハイライト
-		if(currentTab >= 0 && currentTab < Category.values().length) {
-			int highlightY = panelY + 3 + currentTab * 12;
-			drawCoolBlueHighlight(panelX + 2, highlightY, panelX + panelWidth - 2, highlightY + 10);
-		}
-		
-		// カテゴリ名を描画
-		int count = 0;
-		for(Category c : Category.values()) {
-			int textY = panelY + 4 + count * 12;
-			int textColor = (count == currentTab) ? 0xFFFFFFFF : getCoolBlueColor(count);
-			
-			// 影効果
-			Wrapper.fr.drawStringWithShadow(c.name, panelX + 4, textY, textColor);
-			count++;
-		}
-	}
-	
-	private void drawModulePanel() {
-		Category category = Category.values()[currentTab];
-		List<Module> modules = Paradox.instance.moduleManager.getModulesbyCategory(category);
-		
-		if(modules.size() == 0) {
-			return;
-		}
-		
-		// 最大幅を計算
-		int maxLenModule = 0;
-		for(Module module : modules) {
-			if(Wrapper.fr.getStringWidth(module.name) > maxLenModule) {
-				maxLenModule = Wrapper.fr.getStringWidth(module.name);
-			}
-		}
-		
-		int panelX = 67; // カテゴリパネルの右側に配置
-		int panelY = 2; // 左上角に詰める
-		int panelWidth = maxLenModule + 15; // 幅を縮小
-		int panelHeight = modules.size() * 12 + 6; // 高さを縮小
-		
-		// 背景グラデーション（より明るく）
-		drawGradientRect(panelX, panelY, panelX + panelWidth, panelY + panelHeight,
-			0xF0000000, 0xE8000000);
-		
-		// クールな青ベースのボーダー
-		drawCoolBlueBorder(panelX, panelY, panelX + panelWidth, panelY + panelHeight);
-		
-		// 選択されたモジュールのハイライト
-		if(category.moduleIndex >= 0 && category.moduleIndex < modules.size()) {
-			int highlightY = panelY + 3 + category.moduleIndex * 12;
-			drawCoolBlueHighlight(panelX + 2, highlightY, panelX + panelWidth - 2, highlightY + 10);
-		}
-		
-		// モジュール名を描画
-		int count = 0;
-		for(Module m : modules) {
-			int textY = panelY + 4 + count * 12;
-			int textColor;
-			
-			// 選択されている場合は白、それ以外はオン/オフ状態に応じて色を変更
-			if(count == category.moduleIndex) {
-				textColor = 0xFFFFFFFF; // 選択時は白
-			} else if(m.isToggled()) {
-				textColor = 0xFF4A90E2; // オン時は青
-			} else {
-				textColor = 0xFF888888; // オフ時は灰色
-			}
-			
-			// 影効果
-			Wrapper.fr.drawStringWithShadow(m.name, panelX + 4, textY, textColor);
-			count++;
-		}
-	}
-	
-	private void drawGradientRect(int left, int top, int right, int bottom, int startColor, int endColor) {
-		GlStateManager.disableTexture2D();
-		GlStateManager.enableBlend();
-		GlStateManager.disableAlpha();
-		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-		GlStateManager.shadeModel(7425);
-		
-		GL11.glBegin(7);
-		GL11.glColor4f((float)(startColor >> 16 & 255) / 255.0F, (float)(startColor >> 8 & 255) / 255.0F, (float)(startColor & 255) / 255.0F, (float)(startColor >> 24 & 255) / 255.0F);
-		GL11.glVertex2f((float)right, (float)top);
-		GL11.glVertex2f((float)left, (float)top);
-		GL11.glColor4f((float)(endColor >> 16 & 255) / 255.0F, (float)(endColor >> 8 & 255) / 255.0F, (float)(endColor & 255) / 255.0F, (float)(endColor >> 24 & 255) / 255.0F);
-		GL11.glVertex2f((float)left, (float)bottom);
-		GL11.glVertex2f((float)right, (float)bottom);
-		GL11.glEnd();
-		
-		GlStateManager.shadeModel(7424);
-		GlStateManager.disableBlend();
-		GlStateManager.enableAlpha();
-		GlStateManager.enableTexture2D();
-	}
-	
-	private void drawCoolBlueBorder(int left, int top, int right, int bottom) {
-		int color = 0xFF6BB6FF; // より明るい青
-		
-		// 上
-		Gui.drawRect(left - 1, top - 1, right + 1, top, color);
-		// 下
-		Gui.drawRect(left - 1, bottom - 1, right + 1, bottom, color);
-		// 左
-		Gui.drawRect(left - 1, top, left, bottom, color);
-		// 右
-		Gui.drawRect(right, top, right + 1, bottom, color);
-	}
-	
-	private void drawCoolBlueHighlight(int left, int top, int right, int bottom) {
-		int color = 0xA06BB6FF; // より明るい半透明の青
-		drawGradientRect(left, top, right, bottom, color, color & 0x60FFFFFF);
-	}
-	
-	private int getCoolBlueColor(int index) {
-		// より明るい青系のカラーパレット（コントラスト改善）
-		int[] coolBlueColors = {
-			0xFF6BB6FF, // 明るい青
-			0xFF87CEEB, // スカイブルー
-			0xFF5BA3F5, // ライトブルー
-			0xFF4A90E2, // メインブルー
-			0xFF3B82F6, // ブルー
-			0xFF2563EB, // ダークブルー
-			0xFF1D4ED8, // ディープブルー
-			0xFF1E40AF  // ダークブルー2
-		};
-		return coolBlueColors[index % coolBlueColors.length];
-	}
-	
-	public void keyPressed(int k) {
-		Category category = Category.values()[currentTab];
-		List<Module> modules = Paradox.instance.moduleManager.getModulesbyCategory(category);
-		
-		// アニメーションをリセット
-		animationStartTime = System.currentTimeMillis();
-		
-		switch(k) {
-		
-		case Keyboard.KEY_UP:
-			if(expanded) {
-				if(category.moduleIndex <= 0) {
-					category.moduleIndex = modules.size() - 1;
-				} else {
-					category.moduleIndex--;
-				}
-			} else {
-				if(currentTab <= 0) {
-					currentTab = Category.values().length - 1;
-				} else {
-					currentTab--;
-				}
-			}
-			break;
-			
-		case Keyboard.KEY_DOWN:
-			if(expanded) {
-				if(category.moduleIndex >= modules.size() - 1) {
-					category.moduleIndex = 0;
-				} else {
-					category.moduleIndex++;
-				}
-			} else {
-				if(currentTab >= Category.values().length - 1) {
-					currentTab = 0;
-				} else {
-					currentTab++;
-				}
-			}
-			break;
-			
-		case Keyboard.KEY_RIGHT:
-			if(expanded && modules.size() != 0) {
-				Module module = modules.get(category.moduleIndex);
-				if(!module.name.equals("TabGui")) {
-					module.toggle();
-				}
-			} else {
-				if(modules.size() != 0) {
-					expanded = true;
-					category.moduleIndex = 0;
-				}
-			}
-			break;
-			
-		case Keyboard.KEY_LEFT:
-			expanded = false;
-			break;
-		}
-	}
+    // ===== モダン配色 =====
+    private static final int BG_TOP = 0xCC141414;       // 深い黒 (上)
+    private static final int BG_BOTTOM = 0xCC1E1E1E;    // やや明るい黒 (下)
+    private static final int BORDER_COLOR = 0xFF2F81F7; // アクセントブルー
+    private static final int HIGHLIGHT = 0x802F81F7;    // 半透明青
 
+    private static final int TEXT_ACTIVE = 0xFFFFFFFF;       // 選択中 OFF
+    private static final int TEXT_ACTIVE_CAT = 0xFFEFEFEF;   // カテゴリ選択色
+    private static final int TEXT_ON = 0xFF2F81F7;           // モジュールON
+    private static final int TEXT_OFF = 0xFFBBBBBB;          // モジュールOFF
+
+    // ===== 状態管理 =====
+    public int currentTab;
+    public boolean expanded;
+    private long animationStartTime;
+    private float animationProgress;
+
+    public TabGui() {
+        super("TabGui", 0, Category.STATUS);
+        toggled = true;
+        animationStartTime = System.currentTimeMillis();
+    }
+
+    
+    public void draw() {
+        if (this.isToggled()) {
+            updateAnimation();
+            drawModernTabGui();
+        }
+    }
+
+    private void updateAnimation() {
+        long currentTime = System.currentTimeMillis();
+        animationProgress = Math.min(1.0f, (currentTime - animationStartTime) / 300.0f);
+    }
+
+    private void drawModernTabGui() {
+        GlStateManager.pushMatrix();
+        GlStateManager.enableBlend();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+
+        drawCategoryPanel();
+        if (expanded) drawModulePanel();
+
+        GlStateManager.disableBlend();
+        GlStateManager.popMatrix();
+    }
+
+    // =====================================================================
+    // CATEGORY PANEL
+    // =====================================================================
+
+    private void drawCategoryPanel() {
+        int panelX = 4;
+        int panelY = 4;
+        int panelWidth = 70;
+        int panelHeight = Category.values().length * 12 + 6;
+
+        drawGradientRect(panelX, panelY, panelX + panelWidth, panelY + panelHeight,
+                BG_TOP, BG_BOTTOM);
+
+        drawBorder(panelX, panelY, panelX + panelWidth, panelY + panelHeight);
+
+        if (currentTab >= 0 && currentTab < Category.values().length) {
+            int highlightY = panelY + 3 + currentTab * 12;
+            drawHighlight(panelX + 2, highlightY, panelX + panelWidth - 2, highlightY + 10);
+        }
+
+        int count = 0;
+        for (Category c : Category.values()) {
+            int textY = panelY + 4 + count * 12;
+            int textColor = (count == currentTab) ? TEXT_ACTIVE_CAT : TEXT_OFF;
+
+            Wrapper.fr.drawStringWithShadow(c.name, panelX + 6, textY, textColor);
+            count++;
+        }
+    }
+
+    // =====================================================================
+    // MODULE PANEL
+    // =====================================================================
+
+    private void drawModulePanel() {
+        Category category = Category.values()[currentTab];
+        List<Module> modules = Paradox.instance.moduleManager.getModulesbyCategory(category);
+
+        if (modules.isEmpty()) return;
+
+        int maxLen = 0;
+        for (Module m : modules) {
+            maxLen = Math.max(maxLen, Wrapper.fr.getStringWidth(m.name));
+        }
+
+        int panelX = 78;
+        int panelY = 4;
+        int panelWidth = maxLen + 20;
+        int panelHeight = modules.size() * 12 + 6;
+
+        drawGradientRect(panelX, panelY, panelX + panelWidth, panelY + panelHeight,
+                BG_TOP, BG_BOTTOM);
+
+        drawBorder(panelX, panelY, panelX + panelWidth, panelY + panelHeight);
+
+        if (category.moduleIndex >= 0 && category.moduleIndex < modules.size()) {
+            int highlightY = panelY + 3 + category.moduleIndex * 12;
+            drawHighlight(panelX + 2, highlightY, panelX + panelWidth - 2, highlightY + 10);
+        }
+
+        int count = 0;
+        for (Module m : modules) {
+            int textY = panelY + 4 + count * 12;
+
+            // ====== ★ ここが今回の修正の核心 ★ ======
+            int textColor;
+            if (count == category.moduleIndex) {
+                textColor = m.isToggled() ? TEXT_ON : TEXT_ACTIVE;
+            } else {
+                textColor = m.isToggled() ? TEXT_ON : TEXT_OFF;
+            }
+            // ===========================================
+
+            Wrapper.fr.drawStringWithShadow(m.name, panelX + 6, textY, textColor);
+            count++;
+        }
+    }
+
+    // =====================================================================
+    // DRAW HELPERS
+    // =====================================================================
+
+    private void drawGradientRect(int left, int top, int right, int bottom, int startColor, int endColor) {
+        GlStateManager.disableTexture2D();
+        GlStateManager.enableBlend();
+        GlStateManager.disableAlpha();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.shadeModel(7425);
+
+        GL11.glBegin(GL11.GL_QUADS);
+        GL11.glColor4f((startColor >> 16 & 255) / 255F, (startColor >> 8 & 255) / 255F, (startColor & 255) / 255F, (startColor >> 24 & 255) / 255F);
+        GL11.glVertex2f(right, top);
+        GL11.glVertex2f(left, top);
+        GL11.glColor4f((endColor >> 16 & 255) / 255F, (endColor >> 8 & 255) / 255F, (endColor & 255) / 255F, (endColor >> 24 & 255) / 255F);
+        GL11.glVertex2f(left, bottom);
+        GL11.glVertex2f(right, bottom);
+        GL11.glEnd();
+
+        GlStateManager.shadeModel(7424);
+        GlStateManager.enableAlpha();
+        GlStateManager.enableTexture2D();
+    }
+
+    private void drawBorder(int left, int top, int right, int bottom) {
+        Gui.drawRect(left - 1, top - 1, right + 1, top, BORDER_COLOR);
+        Gui.drawRect(left - 1, bottom - 1, right + 1, bottom, BORDER_COLOR);
+        Gui.drawRect(left - 1, top, left, bottom, BORDER_COLOR);
+        Gui.drawRect(right, top, right + 1, bottom, BORDER_COLOR);
+    }
+
+    private void drawHighlight(int left, int top, int right, int bottom) {
+        drawGradientRect(left, top, right, bottom, HIGHLIGHT, HIGHLIGHT);
+    }
+
+    // =====================================================================
+    // KEY INPUT
+    // =====================================================================
+
+    public void keyPressed(int k) {
+        Category category = Category.values()[currentTab];
+        List<Module> modules = Paradox.instance.moduleManager.getModulesbyCategory(category);
+
+        animationStartTime = System.currentTimeMillis();
+
+        switch (k) {
+            case Keyboard.KEY_UP:
+                if (expanded) {
+                    category.moduleIndex = (category.moduleIndex <= 0)
+                            ? modules.size() - 1
+                            : category.moduleIndex - 1;
+                } else {
+                    currentTab = (currentTab <= 0)
+                            ? Category.values().length - 1
+                            : currentTab - 1;
+                }
+                break;
+
+            case Keyboard.KEY_DOWN:
+                if (expanded) {
+                    category.moduleIndex = (category.moduleIndex >= modules.size() - 1)
+                            ? 0
+                            : category.moduleIndex + 1;
+                } else {
+                    currentTab = (currentTab >= Category.values().length - 1)
+                            ? 0
+                            : currentTab + 1;
+                }
+                break;
+
+            case Keyboard.KEY_RIGHT:
+                if (expanded && !modules.isEmpty()) {
+                    Module m = modules.get(category.moduleIndex);
+                    if (!m.name.equals("TabGui"))
+                        m.toggle();
+                } else {
+                    if (!modules.isEmpty()) {
+                        expanded = true;
+                        category.moduleIndex = 0;
+                    }
+                }
+                break;
+
+            case Keyboard.KEY_LEFT:
+                expanded = false;
+                break;
+        }
+    }
 }

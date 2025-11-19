@@ -8,17 +8,20 @@
   "AutoSprint": {
     "enabled": true
   },
-  "ESP Chest": {
+  "ESP Beds": {
     "enabled": false
+  },
+  "ESP Chest": {
+    "enabled": true
   },
   "ESP Items": {
-    "enabled": false
+    "enabled": true
   },
   "ESP Player": {
-    "enabled": false
+    "enabled": true
   },
   "FastPlace": {
-    "enabled": true
+    "enabled": false
   },
   "FullBright": {
     "enabled": false
@@ -36,9 +39,9 @@
     "enabled": false
   },
   "Armor": {
-    "enabled": true
+    "enabled": false
   },
   "Potion": {
-    "enabled": true
+    "enabled": false
   }
 }

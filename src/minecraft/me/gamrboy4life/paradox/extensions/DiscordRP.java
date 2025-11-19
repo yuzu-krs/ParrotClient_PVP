@@ -24,7 +24,7 @@ public class DiscordRP {
 			}
 		}).build();
 		
-		DiscordRPC.discordInitialize("1416196723566444554", handlers, true);
+		DiscordRPC.discordInitialize("1440694133315338375", handlers, true);
 		
 		new Thread("Discord RPC Callback") {
 			@Override

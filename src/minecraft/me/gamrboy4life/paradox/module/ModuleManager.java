@@ -10,6 +10,7 @@ import me.gamrboy4life.paradox.module.pvp.FastPlace;
 import me.gamrboy4life.paradox.module.pvp.MineClicker;
 import me.gamrboy4life.paradox.module.pvp.Scaffold;
 import me.gamrboy4life.paradox.module.pvp.Sneak;
+import me.gamrboy4life.paradox.module.render.EspBeds;
 import me.gamrboy4life.paradox.module.render.EspChest;
 import me.gamrboy4life.paradox.module.render.EspItems;
 import me.gamrboy4life.paradox.module.render.EspPlayer;
@@ -33,8 +34,9 @@ public class ModuleManager {
 		newMod(new AntiAFK());	
 		newMod(new AutoSprint());
 		
-			
+		newMod(new EspBeds());	
 		newMod(new EspChest());
+		
 		newMod(new EspItems());
 		newMod(new EspPlayer());
 		
